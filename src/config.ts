@@ -1,0 +1,116 @@
+import type {
+	ExpressiveCodeConfig,
+	LicenseConfig,
+	NavBarConfig,
+	ProfileConfig,
+	SiteConfig,
+} from "./types/config";
+import { LinkPreset } from "./types/config";
+
+export const siteConfig: SiteConfig = {
+  title: "Fuwari Modified",
+  subtitle: "Demo Site",
+  lang: "zh_CN", // Language code, e.g. 'en', 'zh_CN', 'ja', etc.
+  siteStartDate: "2024-01-01", // The date when the site was launched, in YYYY-MM-DD format
+  timeZone: 8, // Time zone offset in hours from UTC, default in UTC+8
+
+  themeColor: {
+    hue: 250, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
+    fixed: false, // Hide the theme color picker for visitors
+  },
+  // banner: {
+  // 	enable: false,
+  // 	src: "assets/images/demo-banner.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+  // 	position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
+  // 	credit: {
+  // 		enable: false, // Display the credit text of the banner image
+  // 		text: "", // Credit text to be displayed
+  // 		url: "", // (Optional) URL link to the original artwork or artist's page
+  // 	},
+  // },
+  background: {
+    enable: true,
+    assets: { src: "background.png", type: "static" },
+    zIndex: -1,
+    opacity: 0.6,
+    blur: 0,
+  },
+  bannertext: {
+    enable: true,
+    title: "Fuwari Modified!",
+    subtitle: [
+      "天地玄黄，宇宙洪荒。日月盈昃，辰宿列张。",
+      "寒来暑往，秋收冬藏。闰余成岁，律吕调阳。",
+      "云腾致雨，露结为霜。金生丽水，玉出昆冈。",
+      "剑号巨阙，珠称夜光。果珍李柰，菜重芥姜。",
+      "海咸河淡，鳞潜羽翔。龙师火帝，鸟官人皇。",
+    ],
+    typewriter: {
+      speed: 100,
+      deleteSpeed: 50,
+      pauseTime: 2000,
+    },
+  },
+  toc: {
+    enable: true, // Display the table of contents on the right side of the post
+    depth: 2, // Maximum heading depth to show in the table, from 1 to 3
+  },
+  favicon: [
+    // Leave this array empty to use the default favicon
+    // {
+    //   src: '/favicon/icon.png',    // Path of the favicon, relative to the /public directory
+    //   theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
+    //   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
+    // }
+  ],
+};
+
+export const navBarConfig: NavBarConfig = {
+	links: [
+		LinkPreset.Home,
+		LinkPreset.Archive,
+		LinkPreset.About,
+		{
+			name: "GitHub",
+			url: "https://github.com/ANcRyel/fuwari-modified", // Internal links should not include the base path, as it is automatically added
+			external: true, // Show an external link icon and will open in a new tab
+		},
+	],
+};
+
+export const profileConfig: ProfileConfig = {
+	avatar: "assets/avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	name: "Lorem ipsum",
+	bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	links: [
+		{
+			name: "GitHub",
+			icon: "fa7-brands:github", // Visit https://icones.js.org/ for icon codes
+			// You will need to install the corresponding icon set if it's not already included
+			// `pnpm add @iconify-json/<icon-set-name>`
+			url: "https://github.com/ANcRyel/fuwari-modified",
+		},
+		{
+			name: "X",
+			icon: "fa7-brands:x-twitter",
+			url: "https://x.com"
+		},
+		{
+			name: "Steam",
+			icon: "fa7-brands:steam",
+			url: "https://store.steampowered.com",
+		},
+	],
+};
+
+export const licenseConfig: LicenseConfig = {
+	enable: true,
+	name: "CC BY-NC-SA 4.0",
+	url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+};
+
+export const expressiveCodeConfig: ExpressiveCodeConfig = {
+	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
+	// Please select a dark theme, as this blog theme currently only supports dark background color
+	theme: "github-dark",
+};

@@ -1,0 +1,93 @@
+---
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
+import type { PostForList } from "../utils/content-utils";
+
+export interface Props {
+	sortedPosts: PostForList[];
+}
+
+const { sortedPosts } = Astro.props;
+---
+
+<!-- 用 JSON 脚本传递数据给 Alpine -->
+<script
+  type="application/json"
+  set:html={JSON.stringify(sortedPosts)}
+  data-sorted-posts
+/>
+<div class="card-base px-8 py-6" x-data="ArchivePanel">
+  <template x-for="(group, index) in groups" :key="index">
+    <div>
+      <div class="flex flex-row w-full items-center h-[3.75rem]">
+        <div
+          class="w-[15%] md:w-[10%] transition text-2xl font-bold text-right text-75"
+        >
+          <span x-text="group.year"></span>
+        </div>
+        <div class="w-[15%] md:w-[10%]">
+          <div
+            class="h-3 w-3 bg-none rounded-full outline-(--primary) mx-auto
+            -outline-offset-2 z-50 outline-3"
+          >
+          </div>
+        </div>
+        <div class="w-[70%] md:w-[80%] transition text-left text-50">
+          <span x-text="group.posts.length"></span>
+          <span
+            x-text=`group.posts.length === 1 ? '${i18n(I18nKey.postCount)}' : '${i18n(I18nKey.postsCount)}'`
+          ></span>
+        </div>
+      </div>
+
+      <template x-for="(post, index) in group.posts" :key="index">
+        <a
+          :href="getPostUrlBySlug(post.id)"
+          :aria-label="post.data.title"
+          class="group btn-plain block! h-10 w-full rounded-lg hover:text-[initial]"
+        >
+          <div class="flex flex-row justify-start items-center h-full">
+            <!-- date -->
+            <div
+              class="w-[15%] md:w-[10%] transition text-sm text-right text-50"
+            >
+              <span x-text="formatDate(post.data.published)"></span>
+            </div>
+
+            <!-- dot and line -->
+            <div
+              class="w-[15%] md:w-[10%] relative dash-line h-full flex items-center"
+            >
+              <div
+                class="transition-all mx-auto w-1 h-1 rounded group-hover:h-5
+                bg-[oklch(0.5_0.05_var(--hue))] group-hover:bg-(--primary)
+                outline-4 z-50
+                outline-(--card-bg)
+                group-hover:outline-(--btn-plain-bg-hover)
+                group-active:outline-(--btn-plain-bg-active)"
+              >
+              </div>
+            </div>
+
+            <!-- post title -->
+            <div
+              class="w-[70%] md:max-w-[65%] md:w-[65%] text-left font-bold
+              group-hover:translate-x-1 transition-all group-hover:text-(--primary)
+              text-75 pr-8 whitespace-nowrap text-ellipsis overflow-hidden"
+            >
+              <span x-text="post.data.title"></span>
+            </div>
+
+            <!-- tag list -->
+            <div
+              class="hidden md:block md:w-[15%] text-left text-sm transition
+              whitespace-nowrap text-ellipsis overflow-hidden text-30"
+            >
+              <span x-text="formatTag(post.data.tags)"></span>
+            </div>
+          </div>
+        </a>
+      </template>
+    </div>
+  </template>
+</div>

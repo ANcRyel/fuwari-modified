@@ -1,0 +1,58 @@
+---
+
+/*
+==========
+([{ 宇宙声明 }])：
+  该组件未完成，我没时间了::>_<::
+  原先计划该组件拥有以下功能：
+    动切换桌面端、移动端适配图片（适配图片在siteConfig设置）
+==========
+*/
+
+import { siteConfig } from "../../config";
+
+interface Props {
+	className?: string;
+}
+
+const { className } = Astro.props;
+
+const config = siteConfig.background;
+
+if (!config.enable) return null;
+
+const zIndex = config.zIndex ?? -1;
+const opacity = config.opacity ?? 0.8;
+const blurAmount = config.blur ?? 0;
+
+// const imageSrc = ('src' in config.assets) && config.assets.src
+// const imageSrc = url("/background.png");
+import { Image } from "astro:assets";
+import backgroundImage from "../../assets/background.png";
+---
+
+<!-- <link rel="preload" as="image" href={imageSrc} /> -->
+
+<div
+  class:list={[
+    "fixed inset-0 w-full h-full overflow-hidden pointer-events-none",
+    className,
+  ]}
+  style={`
+    z-index: ${zIndex};
+    opacity: ${opacity};
+    filter: ${blurAmount > 0 ? `blur(${blurAmount}px)` : "none"};
+    transform: translateZ(0);
+    will-change: opacity, filter;
+  `}
+>
+  <!-- <img
+    src={imageSrc}
+    alt="wallpaper"
+    class="absolute inset-0 w-full h-full object-cover"
+    decoding="async"
+    loading="eager"
+    fetchpriority="high"
+  /> -->
+  <Image src={backgroundImage} alt="Background" class="absolute inset-0 w-full h-full object-cover"/>
+</div>
